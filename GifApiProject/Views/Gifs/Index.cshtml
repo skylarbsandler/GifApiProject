@@ -1,0 +1,12 @@
+﻿@using GifApiProject.Models
+
+@model List<GifModel>
+
+<h1>All Gifs</h1>
+
+@foreach (var gif in Model)
+{
+    <h3>@gif.Name</h3>
+    <img src="@gif.Url" alt="Gif Image">
+    <h4>@gif.Rating</h4>
+}
