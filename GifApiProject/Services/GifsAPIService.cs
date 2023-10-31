@@ -4,6 +4,7 @@ using System.Text;
 using GifApiProject.Interfaces;
 using GifApiProject.Models;
 using System.Text.Json;
+using Newtonsoft.Json;
 
 namespace GifApiProject.Services
 {
@@ -25,7 +26,7 @@ namespace GifApiProject.Services
             if(response.IsSuccessStatusCode)
             {
                 var stringResponse = await response.Content.ReadAsStringAsync();
-                result = JsonSerializer.Deserialize<List<GifModel>>(stringResponse,
+                result = System.Text.Json.JsonSerializer.Deserialize<List<GifModel>>(stringResponse,
                    new JsonSerializerOptions() { PropertyNamingPolicy = JsonNamingPolicy.CamelCase });
             }
             else
@@ -33,6 +34,18 @@ namespace GifApiProject.Services
                 throw new HttpRequestException(response.ReasonPhrase);
             }
             return result;
+        }
+
+        public async Task<bool> CreateGifAsync(GifModel gif)
+        {
+            string apiEndpoint = "/gifs";
+            var jsonString = JsonConvert.SerializeObject(gif);
+            HttpContent jsonGifData = new StringContent(
+                jsonString, Encoding.UTF8, "application/json");
+
+            var response = await _client.PostAsync(apiEndpoint, jsonGifData);
+
+            return response.IsSuccessStatusCode;
         }
     }
 }

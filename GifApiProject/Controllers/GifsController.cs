@@ -20,5 +20,22 @@ namespace GifApiProject.Controllers
             gifs = await _gifAPIService.GetGifs();
             return View(gifs);
         }
+
+        public IActionResult CreateGif()
+        {
+            return View();
+        }
+
+        [HttpPost("CreateGif")]
+        public async Task<IActionResult> CreateGifAsync(GifModel gif)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest("Invalid Submission");
+            }
+            var result = await _gifAPIService.CreateGifAsync(gif);
+            if (result) { return Ok("Your gif has been successfully created"); }
+            else return BadRequest("An error occured while createing the gif");
+        }
     }
 }

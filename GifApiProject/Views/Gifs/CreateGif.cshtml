@@ -1,0 +1,19 @@
+﻿@model GifModel
+
+<h1>Create a Gif</h1>
+
+<form method="post" asp-controller="Gifs" asp-action="CreateGif" >
+    <div class="form-group">
+        <label for="Name">Title:</label>
+        <input type="text" class="form-control" id="Name" name="Name" />
+    </div>
+    <div class="form-group">
+        <label for="Url">Gif URL:</label>
+        <input type="text" id="Url" name="Url" />
+    </div>
+    <div class="form-group">
+        <label for="Rating">Rating:</label>
+        <input type="number" id="Rating" name="Rating" />
+    </div>
+    <button type="submit" class="btn btn-primary">Create Gif</button>
+</form>
